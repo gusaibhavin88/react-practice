@@ -6,7 +6,6 @@ const initialState = {
   message: null,
   isAuthenticated: false,
   userData: null,
-  loginUser: {},
   loading: false,
 };
 
@@ -29,10 +28,10 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(logInUserAction.fulfilled, (state, action) => {
-        console.log(action.payload, "kjkjjl");
         state.loading = false;
         state.isAuthenticated = true;
-        state.userData = action?.user?.payload?.data?.user;
+        state.userData = action?.payload?.data?.data;
+        localStorage.setItem("token", action?.payload?.data?.data?.token);
       })
       .addCase(logInUserAction.rejected, (state, action) => {
         state.loading = false;
