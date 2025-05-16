@@ -7,26 +7,23 @@ import {
 } from "react-router-dom";
 import SignUp from "./component/signUp/signUp";
 import LogIn from "./component/logIn/logIn";
+import { PrivateRoute } from "./component/common/privateRoute";
 import Dashboard from "./component/dashboard/dashboard";
-import { PrivateRoute } from "./component/privateRoute/privateRoute";
+import { PublicRoute } from "./component/common/publicRoute";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route exact path="/" element={<Navigate to="/dashboard" />}></Route>
-          <Route exact path="signup" element={<SignUp />}></Route>
-          <Route exact path="login" element={<LogIn />}></Route>
-          <Route
-            exact
-            path="dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          ></Route>
+          <Route element={<PublicRoute />}>
+            <Route exact path="/" element={<Navigate to="/signup" />}></Route>
+            <Route exact path="signup" element={<SignUp />}></Route>
+            <Route exact path="login" element={<LogIn />}></Route>
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route exact path="/dashboard" element={<Dashboard />} />
+          </Route>
         </Routes>
       </div>
     </Router>
