@@ -1,0 +1,9 @@
+.eventAdd {
+  display: flex;
+  border: 1px solid red;
+  align-self: last baseline;
+}
+
+.addEvent {
+  margin-bottom: 15px;
+}

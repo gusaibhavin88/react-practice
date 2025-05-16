@@ -10,7 +10,8 @@ import LogIn from "./component/logIn/logIn";
 import { PrivateRoute } from "./component/common/privateRoute";
 import Dashboard from "./component/dashboard/dashboard";
 import { PublicRoute } from "./component/common/publicRoute";
-import { EventManagement } from "./component/components/eventManagement/eventManagement";
+import { EventManagement } from "./component/eventManagement/eventManagement";
+import { EventParent } from "./component/eventParent";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           </Route>
           <Route element={<PrivateRoute />}>
             <Route exact path="/dashboard" element={<Dashboard />} />
-            <Route exact path="/event" element={<EventManagement />} />
+            <Route exact path="/event" element={<EventParent />} />
           </Route>
         </Routes>
       </div>

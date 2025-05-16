@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./eventManagement.module.css";
 import { useEffect, useState } from "react";
-import buildQuery from "../../../utilityFunction/queryFunction";
-import { listEventAction } from "../../../redux/event/eventAction";
+import buildQuery from "../../utilityFunction/queryFunction";
+import { listEventAction } from "../../redux/event/eventAction";
 
 export function EventManagement() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.event.events);
-  console.log(events, "khkhfwfwffwwfwfg");
   const [filters, setFilters] = useState({
     search: "",
     sortField: "createdAt",
@@ -22,7 +21,7 @@ export function EventManagement() {
   };
   const onError = () => {};
 
-  const fetchEventsData = async () => {
+  useEffect(() => {
     const query = buildQuery(filters);
 
     dispatch(
@@ -34,13 +33,6 @@ export function EventManagement() {
         },
       })
     );
-  };
-
-  useEffect(async () => {
-    const fetchData = async () => {
-      await fetchEventsData();
-    };
-    fetchData();
   }, []);
 
   return (
@@ -73,10 +65,9 @@ export function EventManagement() {
                   />
                 </td>
                 <td>{item.name}</td>
-                <td>{item.name}</td>
                 <td>{item.description}</td>
-                <td>{item.startDate}</td>
-                <td>{item.endDate}</td>
+                <td>{new Date(item.startDate).toLocaleDateString("en-GB")}</td>
+                <td>{new Date(item.endDate).toLocaleDateString("en-GB")}</td>
                 <td>{item.totalGuest}</td>
               </tr>
             ))}
