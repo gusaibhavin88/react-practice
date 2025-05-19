@@ -15,9 +15,11 @@ export const listEventAction = createAsyncThunk(
 
     try {
       const response = await listEventRequest(formData, config);
-      onComplete(response.data);
+      console.log(response, "response");
+
       return response;
     } catch (error) {
+      console.log("33333");
       onError(error.response);
       throw error.response.data;
     }

@@ -21,9 +21,10 @@ const eventSlice = createSlice({
         state.loading = true;
       })
       .addCase(listEventAction.fulfilled, (state, action) => {
+        console.log(action, "dddddddddddddd");
         state.loading = false;
         state.isAuthenticated = true;
-        state.events = action?.payload?.data?.data?.users;
+        state.events = action?.payload?.data?.data?.events;
       })
       .addCase(listEventAction.rejected, (state, action) => {
         state.loading = false;

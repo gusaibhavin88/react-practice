@@ -15,14 +15,11 @@ export function EventManagement() {
     search: "",
     sortField: "createdAt",
     sortOrder: "asc",
-    itemPerPage: "1",
+    itemPerPage: "10",
     page: 1,
   });
 
-  const onComplete = (response) => {
-    if (response.success) {
-    }
-  };
+  const onComplete = (response) => {};
   const onError = () => {};
 
   useEffect(() => {

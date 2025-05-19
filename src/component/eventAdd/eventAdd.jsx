@@ -25,6 +25,7 @@ export function EventAdd() {
     setValue,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(createEvent),
@@ -35,8 +36,8 @@ export function EventAdd() {
 
   const onComplete = (result) => {
     if (result.success) {
-      console.log("ffffffffffffffffffffffffffff");
       closeModel();
+      navigate("/event");
     }
   };
   const onError = () => {};
@@ -67,6 +68,9 @@ export function EventAdd() {
         },
       })
     );
+
+    reset();
+    closeModel();
   };
 
   return (
