@@ -1,9 +1,42 @@
 .eventAdd {
-  display: flex;
-  border: 1px solid red;
-  align-self: last baseline;
+  display: block;
 }
 
 .addEvent {
   margin-bottom: 15px;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.formSub {
+  position: relative;
+}
+
+.formSub input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.formSub input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.errorText {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
 }

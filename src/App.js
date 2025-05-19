@@ -19,12 +19,12 @@ function App() {
       <div className="App">
         <Routes>
           <Route element={<PublicRoute />}>
-            <Route exact path="/" element={<Navigate to="/signup" />}></Route>
+            <Route exact path="/" element={<Navigate to="/login" />}></Route>
             <Route exact path="signup" element={<SignUp />}></Route>
             <Route exact path="login" element={<LogIn />}></Route>
           </Route>
           <Route element={<PrivateRoute />}>
-            <Route exact path="/dashboard" element={<Dashboard />} />
+            {/* <Route exact path="/dashboard" element={<Dashboard />} /> */}
             <Route exact path="/event" element={<EventParent />} />
           </Route>
         </Routes>

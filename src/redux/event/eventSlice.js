@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { listEventAction } from "./eventAction";
+import { addEventAction, listEventAction } from "./eventAction";
 
 const initialState = {
   error: null,
   message: null,
   events: [],
   loading: false,
+  addEvent: {
+    loading: false,
+  },
 };
 
 const eventSlice = createSlice({
@@ -23,6 +26,15 @@ const eventSlice = createSlice({
         state.events = action?.payload?.data?.data?.users;
       })
       .addCase(listEventAction.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addEventAction.pending, (state, action) => {
+        state.addEvent.loading = false;
+      })
+      .addCase(addEventAction.fulfilled, (state, action) => {
+        state.addEvent.loading = true;
+      })
+      .addCase(addEventAction.rejected, (state, action) => {
         state.loading = false;
       });
   },

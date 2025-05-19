@@ -3,8 +3,12 @@ import styles from "./eventManagement.module.css";
 import { useEffect, useState } from "react";
 import buildQuery from "../../utilityFunction/queryFunction";
 import { listEventAction } from "../../redux/event/eventAction";
+import Model from "../../model/model";
+import { EventAdd } from "../eventAdd/eventAdd";
+import { useEventModel } from "../../context/eventModelContext";
 
 export function EventManagement() {
+  const { isOpen, openModel, closeModel } = useEventModel();
   const dispatch = useDispatch();
   const events = useSelector((state) => state.event.events);
   const [filters, setFilters] = useState({
@@ -37,6 +41,14 @@ export function EventManagement() {
 
   return (
     <div className={styles.eventManagement}>
+      <div className={styles.eventAdd}>
+        <button className={styles.addEvent} onClick={() => openModel()}>
+          Add Event
+        </button>
+      </div>
+      <Model>
+        <EventAdd />
+      </Model>
       <table
         className={styles.eventTable}
         border="1"

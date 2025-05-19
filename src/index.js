@@ -5,13 +5,16 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { persister, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import EventModelContext from "./context/eventModelContext";
 // import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persister}>
-      <App />
+      <EventModelContext>
+        <App />
+      </EventModelContext>
     </PersistGate>
   </Provider>
 );
