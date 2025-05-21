@@ -3,9 +3,11 @@ import styles from "./eventAdd.module.css";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addEventAction } from "../../redux/event/eventAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEventModel } from "../../context/eventModelContext";
+import { useEffect } from "react";
+import { clearDetail } from "../../redux/event/eventSlice";
 
 const createEvent = yup.object().shape({
   name: yup.string().required("Name is Required"),
@@ -16,7 +18,10 @@ const createEvent = yup.object().shape({
 });
 
 export function EventAdd() {
-  const { closeModel } = useEventModel();
+  const { closeModel, type } = useEventModel();
+  console.log(type, "fwfwf");
+  const eventDetail = useSelector((state) => state.event.details);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValue = {};
@@ -33,6 +38,9 @@ export function EventAdd() {
   });
 
   const selectedFiles = watch("images");
+  const filesArray = selectedFiles ? Array.from(selectedFiles) : [];
+
+  console.log(selectedFiles);
 
   const onComplete = (result) => {
     if (result.success) {
@@ -73,6 +81,16 @@ export function EventAdd() {
     closeModel();
   };
 
+  useEffect(() => {
+    if (eventDetail) {
+      Object.keys(eventDetail).forEach((key) => {
+        setValue(key, eventDetail[key]);
+      });
+    }
+    return () => {
+      dispatch(clearDetail());
+    };
+  }, [eventDetail]);
   return (
     <div className={styles.eventAdd}>
       <form onSubmit={handleSubmit(onSubmitForm)}>
@@ -123,12 +141,31 @@ export function EventAdd() {
             )}
           </div>
         </div>
-        <div>
-          <label>Select Images</label>
-          <input type="file" multiple {...register("images")} />
-        </div>
 
-        <button type="submit">Submit</button>
+        {type !== "view" && (
+          <div>
+            <label>Select Images</label>
+            <input type="file" multiple {...register("images")} />
+          </div>
+        )}
+
+        {Array.isArray(filesArray) && filesArray.length > 0 && (
+          <div className={styles.imageView}>
+            {filesArray.map((item, index) => (
+              <div className={styles.imageView} key={index}>
+                <img
+                  src={URL.createObjectURL(item)}
+                  alt={`preview-${index}`}
+                  style={{ width: "50px" }}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
+        <button className={styles.submitButton} type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );

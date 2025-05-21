@@ -41,12 +41,10 @@ const SignUp = () => {
     if (response.success) {
       navigate("/login");
     }
-    console.log(response, "khh");
   };
   const onError = () => {};
 
   const submitForm = (data) => {
-    console.log(data, "khk");
     const formData = new FormData();
 
     for (let [key, value] of Object.entries(data)) {

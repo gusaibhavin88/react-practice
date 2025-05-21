@@ -1,12 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addEventAction, listEventAction } from "./eventAction";
+import { addEventAction, getEventAction, listEventAction } from "./eventAction";
 
 const initialState = {
   error: null,
   message: null,
   events: [],
+  details: null,
   loading: false,
   addEvent: {
+    loading: false,
+  },
+  eventDetails: {
     loading: false,
   },
 };
@@ -14,14 +18,17 @@ const initialState = {
 const eventSlice = createSlice({
   name: "event",
   initialState,
-  reducers: {},
+  reducers: {
+    clearDetail: (state) => {
+      state.details = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(listEventAction.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(listEventAction.fulfilled, (state, action) => {
-        console.log(action, "dddddddddddddd");
         state.loading = false;
         state.isAuthenticated = true;
         state.events = action?.payload?.data?.data?.events;
@@ -37,8 +44,23 @@ const eventSlice = createSlice({
       })
       .addCase(addEventAction.rejected, (state, action) => {
         state.loading = false;
+      })
+      // Get event details
+      .addCase(getEventAction.pending, (state) => {
+        state.eventDetails.loading = true;
+        state.error = null;
+      })
+      .addCase(getEventAction.fulfilled, (state, action) => {
+        state.eventDetails.loading = false;
+        state.details = action.payload?.data?.data || null;
+        console.log(state.details, "fwfwfwfw");
+      })
+      .addCase(getEventAction.rejected, (state, action) => {
+        state.eventDetails.loading = false;
+        state.error = action.error?.message || "Failed to fetch event details";
       });
   },
 });
 
 export default eventSlice.reducer;
+export const { clearDetail } = eventSlice.actions; // Export the clearError action

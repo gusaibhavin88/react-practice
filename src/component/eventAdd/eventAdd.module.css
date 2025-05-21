@@ -40,3 +40,14 @@
   font-size: 12px;
   margin-top: 4px;
 }
+
+.imageView {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+.submitButton {
+  margin-top: 10px;
+}

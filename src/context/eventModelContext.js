@@ -5,6 +5,7 @@ export const useEventModel = () => useContext(ModelContext);
 
 const EventModelContext = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [type, setType] = useState("add");
 
   const openModel = () => {
     setIsOpen(true);
@@ -14,7 +15,9 @@ const EventModelContext = ({ children }) => {
   };
 
   return (
-    <ModelContext.Provider value={{ isOpen, openModel, closeModel }}>
+    <ModelContext.Provider
+      value={{ isOpen, openModel, closeModel, setType, type }}
+    >
       {children}
     </ModelContext.Provider>
   );

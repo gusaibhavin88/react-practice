@@ -2,15 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./eventManagement.module.css";
 import { useEffect, useState } from "react";
 import buildQuery from "../../utilityFunction/queryFunction";
-import { listEventAction } from "../../redux/event/eventAction";
+import { getEventAction, listEventAction } from "../../redux/event/eventAction";
 import Model from "../../model/model";
 import { EventAdd } from "../eventAdd/eventAdd";
 import { useEventModel } from "../../context/eventModelContext";
 
 export function EventManagement() {
-  const { isOpen, openModel, closeModel } = useEventModel();
+  const { isOpen, openModel, closeModel, setType } = useEventModel();
   const dispatch = useDispatch();
   const events = useSelector((state) => state.event.events);
+  const eventDetail = useSelector((state) => state.event.details);
+
   const [filters, setFilters] = useState({
     search: "",
     sortField: "createdAt",
@@ -18,6 +20,21 @@ export function EventManagement() {
     itemPerPage: "10",
     page: 1,
   });
+
+  const getDetail = (id) => {
+    dispatch(
+      getEventAction({
+        functions: {
+          onComplete,
+          formData: { id },
+          onError,
+        },
+      })
+    );
+
+    openModel();
+    setType("view");
+  };
 
   const onComplete = (response) => {};
   const onError = () => {};
@@ -39,7 +56,13 @@ export function EventManagement() {
   return (
     <div className={styles.eventManagement}>
       <div className={styles.eventAdd}>
-        <button className={styles.addEvent} onClick={() => openModel()}>
+        <button
+          className={styles.addEvent}
+          onClick={() => {
+            openModel();
+            setType("add");
+          }}
+        >
           Add Event
         </button>
       </div>
@@ -60,6 +83,7 @@ export function EventManagement() {
             <th>Start Date</th>
             <th>End Date</th>
             <th>Total Guest</th>
+            <th>View</th>
           </tr>
         </thead>
         <tbody>
@@ -78,6 +102,9 @@ export function EventManagement() {
                 <td>{new Date(item.startDate).toLocaleDateString("en-GB")}</td>
                 <td>{new Date(item.endDate).toLocaleDateString("en-GB")}</td>
                 <td>{item.totalGuest}</td>
+                <td>
+                  <button onClick={() => getDetail(item?._id)}>View</button>
+                </td>
               </tr>
             ))}
         </tbody>

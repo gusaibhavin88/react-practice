@@ -35,7 +35,6 @@ const LogIn = () => {
     if (response.success) {
       navigate("/dashboard");
     }
-    console.log(response, "khh");
   };
   const onError = () => {};
 
